@@ -1,0 +1,12 @@
+[project]
+name = "arduino-unoq-dynota"
+version = "0.1.0"
+description = "Arduino Uno Q Dynamic Sketch Loader - Upload ELF binaries for dynamic loading via LLEXT"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "msgpack>=1.1.0",
+]
+
+[project.scripts]
+sketch-upload = "bridge_loader.main:main"
