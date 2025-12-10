@@ -1,0 +1,56 @@
+name: Build Arduino Sketch
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          echo "$PWD/bin" >> $GITHUB_PATH
+
+      - name: Verify Arduino CLI installation
+        run: arduino-cli version
+
+      - name: Install Zephyr core
+        run: |
+          arduino-cli core install arduino:zephyr --additional-urls https://github.com/arduino/ArduinoCore-zephyr/actions/runs/20095591057/job/57654076304
+
+      - name: Install loader dependencies
+        run: |
+          arduino-cli lib install Arduino_RouterBridge
+
+      - name: Compile loader
+        run: |
+          arduino-cli compile -b arduino:zephyr:unoq sketch_loader --output-dir build/loader
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: loader-build
+          path: build/loader
+          retention-days: 7
+
+      - name: Compile sketch
+        run: |
+          arduino-cli compile -b arduino-git:zephyr:unoq sketches/Blink --output-dir build/blink
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: blink-build
+          path: build/blink
+          retention-days: 7
