@@ -1,6 +1,5 @@
 #include "Arduino_RouterBridge.h"
 #include <stdio.h>
-#include "cpu_monitor.h"
 #include "llext_loader.h"
 #include <zephyr/kernel.h>
 

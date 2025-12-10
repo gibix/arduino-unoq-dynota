@@ -6,7 +6,9 @@ system.
 ## What it does
 
 Update parts of your sketch at runtime while other components keep running. No
-need to stop and restart the entire Arduino.
+need to stop and restart the entire Arduino. This is an example project that on
+porpuse creates a complex workflow. Single part of this project can be cherry
+picked.
 
 ## Credits
 
@@ -25,6 +27,12 @@ Forked from [kartben/zephyr_unoq_demo](https://github.com/kartben/zephyr_unoq_de
 - `sketch_loader/` - Arduino sketch with LLEXT loader
 - `bridge_loader/` - Python WebSocket bridge for RPC
 - `.github/` - CI workflow for compilation
+
+## Zephyr core
+
+To compile and dynamically load executable files, it is necessary to compile
+the Zephyr core with additional symbols compared to the official version
+released by Arduino. To keep this example clear, I made a [fork](https://github.com/gibix/ArduinoCore-zephyr).
 
 ## TODO
 
